@@ -28,6 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.button1 = new System.Windows.Forms.Button();
             this.lblFile = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
@@ -35,25 +38,28 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.lblRecords = new System.Windows.Forms.Label();
-            this.dataGrid = new System.Windows.Forms.DataGridView();
             this.txtBody = new System.Windows.Forms.TextBox();
+            this.dataGrid = new System.Windows.Forms.DataGridView();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(12, 16);
+            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.button1.Image = global::CargaFinComun.Properties.Resources.open_archive;
+            this.button1.Location = new System.Drawing.Point(5, 156);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(68, 21);
+            this.button1.Size = new System.Drawing.Size(48, 31);
             this.button1.TabIndex = 0;
-            this.button1.Text = "Open File";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // lblFile
             // 
             this.lblFile.AutoSize = true;
-            this.lblFile.Location = new System.Drawing.Point(151, 50);
+            this.lblFile.Location = new System.Drawing.Point(79, 84);
             this.lblFile.Name = "lblFile";
             this.lblFile.Size = new System.Drawing.Size(37, 13);
             this.lblFile.TabIndex = 1;
@@ -61,34 +67,35 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(329, 76);
+            this.button2.Enabled = false;
+            this.button2.Image = global::CargaFinComun.Properties.Resources.upload;
+            this.button2.Location = new System.Drawing.Point(385, 156);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(104, 21);
+            this.button2.Size = new System.Drawing.Size(48, 31);
             this.button2.TabIndex = 2;
-            this.button2.Text = "Load Records";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // PBar
             // 
-            this.PBar.Location = new System.Drawing.Point(12, 113);
+            this.PBar.Location = new System.Drawing.Point(0, 198);
             this.PBar.Name = "PBar";
-            this.PBar.Size = new System.Drawing.Size(458, 23);
+            this.PBar.Size = new System.Drawing.Size(433, 23);
             this.PBar.TabIndex = 3;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 84);
+            this.label2.Location = new System.Drawing.Point(2, 128);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(50, 13);
+            this.label2.Size = new System.Drawing.Size(54, 13);
             this.label2.TabIndex = 4;
-            this.label2.Text = "Records:";
+            this.label2.Text = "Registros:";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 50);
+            this.label3.Location = new System.Drawing.Point(2, 84);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(51, 13);
             this.label3.TabIndex = 5;
@@ -97,37 +104,77 @@
             // lblRecords
             // 
             this.lblRecords.AutoSize = true;
-            this.lblRecords.Location = new System.Drawing.Point(151, 84);
+            this.lblRecords.Location = new System.Drawing.Point(79, 128);
             this.lblRecords.Name = "lblRecords";
-            this.lblRecords.Size = new System.Drawing.Size(50, 13);
+            this.lblRecords.Size = new System.Drawing.Size(64, 13);
             this.lblRecords.TabIndex = 6;
-            this.lblRecords.Text = "Records:";
-            // 
-            // dataGrid
-            // 
-            this.dataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGrid.Location = new System.Drawing.Point(12, 142);
-            this.dataGrid.Name = "dataGrid";
-            this.dataGrid.Size = new System.Drawing.Size(458, 150);
-            this.dataGrid.TabIndex = 7;
+            this.lblRecords.Text = "No Records";
             // 
             // txtBody
             // 
-            this.txtBody.Location = new System.Drawing.Point(476, 6);
+            this.txtBody.Location = new System.Drawing.Point(0, 226);
             this.txtBody.MaxLength = 1000000;
             this.txtBody.Multiline = true;
             this.txtBody.Name = "txtBody";
+            this.txtBody.ReadOnly = true;
             this.txtBody.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtBody.Size = new System.Drawing.Size(407, 286);
+            this.txtBody.Size = new System.Drawing.Size(433, 130);
             this.txtBody.TabIndex = 8;
+            // 
+            // dataGrid
+            // 
+            this.dataGrid.AllowUserToAddRows = false;
+            this.dataGrid.AllowUserToDeleteRows = false;
+            this.dataGrid.AllowUserToResizeRows = false;
+            this.dataGrid.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.dataGrid.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            this.dataGrid.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.ControlDarkDark;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.ControlDarkDark;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGrid.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dataGrid.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.dataGrid.Location = new System.Drawing.Point(0, 226);
+            this.dataGrid.MultiSelect = false;
+            this.dataGrid.Name = "dataGrid";
+            this.dataGrid.RowHeadersVisible = false;
+            this.dataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGrid.Size = new System.Drawing.Size(433, 130);
+            this.dataGrid.TabIndex = 9;
+            this.dataGrid.TabStop = false;
+            this.dataGrid.Visible = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Enabled = false;
+            this.pictureBox1.Image = global::CargaFinComun.Properties.Resources.logo_sinergy;
+            this.pictureBox1.Location = new System.Drawing.Point(265, 12);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(168, 50);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 10;
+            this.pictureBox1.TabStop = false;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(895, 304);
+            this.ClientSize = new System.Drawing.Size(436, 359);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.txtBody);
-            this.Controls.Add(this.dataGrid);
             this.Controls.Add(this.lblRecords);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -135,9 +182,12 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.lblFile);
             this.Controls.Add(this.button1);
+            this.Controls.Add(this.dataGrid);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
-            this.Text = "Carga";
+            this.Text = "Carga FinComun";
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -152,8 +202,9 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lblRecords;
-        private System.Windows.Forms.DataGridView dataGrid;
         private System.Windows.Forms.TextBox txtBody;
+        private System.Windows.Forms.DataGridView dataGrid;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 

@@ -41,6 +41,8 @@
             this.txtBody = new System.Windows.Forms.TextBox();
             this.dataGrid = new System.Windows.Forms.DataGridView();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -49,7 +51,7 @@
             // 
             this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.button1.Image = global::CargaFinComun.Properties.Resources.open_archive;
-            this.button1.Location = new System.Drawing.Point(5, 156);
+            this.button1.Location = new System.Drawing.Point(6, 141);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(48, 31);
             this.button1.TabIndex = 0;
@@ -59,7 +61,7 @@
             // lblFile
             // 
             this.lblFile.AutoSize = true;
-            this.lblFile.Location = new System.Drawing.Point(79, 84);
+            this.lblFile.Location = new System.Drawing.Point(80, 85);
             this.lblFile.Name = "lblFile";
             this.lblFile.Size = new System.Drawing.Size(37, 13);
             this.lblFile.TabIndex = 1;
@@ -69,7 +71,7 @@
             // 
             this.button2.Enabled = false;
             this.button2.Image = global::CargaFinComun.Properties.Resources.upload;
-            this.button2.Location = new System.Drawing.Point(385, 156);
+            this.button2.Location = new System.Drawing.Point(376, 141);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(48, 31);
             this.button2.TabIndex = 2;
@@ -86,7 +88,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(2, 128);
+            this.label2.Location = new System.Drawing.Point(3, 113);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(54, 13);
             this.label2.TabIndex = 4;
@@ -95,7 +97,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(2, 84);
+            this.label3.Location = new System.Drawing.Point(5, 85);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(51, 13);
             this.label3.TabIndex = 5;
@@ -104,7 +106,7 @@
             // lblRecords
             // 
             this.lblRecords.AutoSize = true;
-            this.lblRecords.Location = new System.Drawing.Point(79, 128);
+            this.lblRecords.Location = new System.Drawing.Point(80, 113);
             this.lblRecords.Name = "lblRecords";
             this.lblRecords.Size = new System.Drawing.Size(64, 13);
             this.lblRecords.TabIndex = 6;
@@ -161,18 +163,36 @@
             // 
             this.pictureBox1.Enabled = false;
             this.pictureBox1.Image = global::CargaFinComun.Properties.Resources.logo_sinergy;
-            this.pictureBox1.Location = new System.Drawing.Point(265, 12);
+            this.pictureBox1.Location = new System.Drawing.Point(265, 3);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(168, 50);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 10;
             this.pictureBox1.TabStop = false;
             // 
+            // label1
+            // 
+            this.label1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label1.Location = new System.Drawing.Point(-2, 61);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(440, 2);
+            this.label1.TabIndex = 11;
+            // 
+            // label4
+            // 
+            this.label4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label4.Location = new System.Drawing.Point(-2, 184);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(440, 2);
+            this.label4.TabIndex = 12;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(436, 359);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.txtBody);
             this.Controls.Add(this.lblRecords);
@@ -205,6 +225,8 @@
         private System.Windows.Forms.TextBox txtBody;
         private System.Windows.Forms.DataGridView dataGrid;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label4;
     }
 }
 

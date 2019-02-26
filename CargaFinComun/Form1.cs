@@ -57,30 +57,35 @@ namespace CargaFinComun
                 // Check all required columns are present
                 if (!headers.Exists(x => x == "idSucursal"))
                 {
+                    button2.Enabled = false;
                     throw new ArgumentException("idSucursal field not present in input file.");
                 }
                 else if (!headers.Exists(x => x == "Prioridad"))
                 {
+                    button2.Enabled = false;
                     throw new ArgumentException("Prioridad field not present in input file.");
                 }
                 else if (!headers.Exists(x => x == "nombre"))
                 {
+                    button2.Enabled = false;
                     throw new ArgumentException("nombre field not present in input file.");
                 }
                 if (!headers.Exists(x => x == "tipoActividad"))
                 {
+                    button2.Enabled = false;
                     throw new ArgumentException("tipoActividad field not present in input file.");
                 }
                 if (!headers.Exists(x => x == "date"))
                 {
+                    button2.Enabled = false;
                     throw new ArgumentException("date field not present in input file.");
                 }
 
                 while (csv.Read())
                 {
-                    System.Data.DataRow row = dataTable.NewRow();
+                    DataRow row = dataTable.NewRow();
 
-                    foreach (System.Data.DataColumn column in dataTable.Columns)
+                    foreach (DataColumn column in dataTable.Columns)
                     {
                         row[column.ColumnName] = csv.GetField(column.DataType, column.ColumnName);
                     }
@@ -158,8 +163,8 @@ namespace CargaFinComun
                     loader += "{ \n";
                     loader += "\"deliveryWindowStart\": \"16:45:00\", \n";
                     loader += "\"deliveryWindowEnd\": \"17:45:00\", \n";
-                    loader += "\"startTime\": \" \", \n";
-                    loader += "\"endTime\": \" \", \n";
+                    loader += "\"startTime\": \"\", \n";
+                    loader += "\"endTime\": \"\", \n";
                     loader += "\"timeSlot\": \"Todo el d\u00eda\", \n";
                     loader += "\"resourceId\":\"" + row.Cells["idK"].Value.ToString() + "\", \n";
                     loader += "\"activityType\":\"" + row.Cells["tipoActividad"].Value.ToString() + "\", \n";
@@ -185,7 +190,6 @@ namespace CargaFinComun
                     loader += "\"customerPhone\":\"" + row.Cells["telefonoCelular"].Value.ToString() + "\", \n";
                     loader += "\"customerNumber\":\"" + row.Cells["telefonoFijo"].Value.ToString() + "\", \n";
                     loader += "\"Prioridad\":\"" + row.Cells["Prioridad"].Value.ToString() + "\", \n";
-
                     if (string.IsNullOrEmpty(row.Cells["date"].Value.ToString()))
                     {
                         loader += "\"streetAddress\":\"" + row.Cells["Domicilio"].Value.ToString() + "\" \n";

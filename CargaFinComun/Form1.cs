@@ -121,169 +121,183 @@ namespace CargaFinComun
 
         private void InsertActivities(int dubedos)
         {
-            if (dubedos != 0)
+            try
             {
-                txtBody.Text += "Iteración " + iterations + " \r\n";
-                txtBody.Update();
-                iterations++;
-                bool created = false;
-                int Max = dubedos;
-                PBar.Maximum = Max;
-                PBar.Value = 1;
-                PBar.Step = 1;
-                txtBody.Text += "Generando codigo JSON... \r\n";
-                txtBody.Update();
-                string body = "{ \n";
-                body += "\"updateParameters\" : { \n ";
-                body += "\"identifyActivityBy\" : \"apptNumber\" , \n";
-                body += "\"ifInFinalStatusThen\" : \"doNothing\" \n ";
-                body += "}, \n ";
-                body += "\"activities\" : [ \n ";
-                int i = 0;
-                foreach (DataGridViewRow row in dataGrid.Rows)
+                if (dubedos != 0)
                 {
-
-                    //TipoActividad,id,idK,idSucursal,Prioridad,apellidoPaterno,apellidoMaterno,nombre,fechaNacimiento,sexo,Domicilio,lat,lng,telefonoFijo,telefonoCelular,capitalInicial,,interesesOrdinariosPendiente,interesesMoratoriosPendiente,iva,totalPendiente,numeroPagosPendientes,numeroPagosRealizados,montoPagoFrecuente,fechaUltimoPago,diasMoratorios,importeUltimoPago,fechaCreditoOtorgamiento,saldoExigible,date
-                    //loader += "\"capitalAbonado\":\"" + row["capitalInicial"].ToString() + "\", \n";
-                    //loader += "\"interesesOrdinariosAbonado\":\"" + row["capitalInicial"].ToString() + "\", \n";
-                    //loader += "\"interesesMoratoriosAbonado\":\"" + row["capitalInicial"].ToString() + "\", \n";
-                    //loader += "\"totalAbonado\":\"" + row["capitalInicial"].ToString() + "\", \n";
-                    //body += "\"deliveryWindowStart\":\"" + row["capitalInicial"].ToString() + "\", \n";
-                    //body += "\"deliveryWindowEnd\":\"" + row["capitalInicial"].ToString() + "\", \n";
-                    //body += "\"startTime\":\"" + row["capitalInicial"].ToString() + "\", \n";
-                    //body += "\"endTime\":\"" + row["capitalInicial"].ToString() + "\", \n";
-                    //body += "\"city\":\"" + row["capitalInicial"].ToString() + "\", \n";
-                    //body += "\"estado\":\"" + row["capitalInicial"].ToString() + "\", \n";
-                    //body += "\"postalCode\":\"" + row["capitalInicial"].ToString() + "\" \n";
-                    //body += "\"numeroInt\":\"" + row["capitalInicial"].ToString() + "\", \n";
-
-                    i++;
-
-                    string loader = "";
-                    loader += "{ \n";
-                    loader += "\"deliveryWindowStart\": \"16:45:00\", \n";
-                    loader += "\"deliveryWindowEnd\": \"17:45:00\", \n";
-                    loader += "\"startTime\": \"\", \n";
-                    loader += "\"endTime\": \"\", \n";
-                    loader += "\"timeSlot\": \"Todo el d\u00eda\", \n";
-                    loader += "\"resourceId\":\"" + row.Cells["idK"].Value.ToString() + "\", \n";
-                    loader += "\"activityType\":\"" + row.Cells["tipoActividad"].Value.ToString() + "\", \n";
-                    loader += "\"apptNumber\":\"" + row.Cells["id"].Value.ToString() + DateTime.Now.ToString("mmss") + "\", \n";
-                    loader += "\"capitalInicial\":\"" + row.Cells["capitalInicial"].Value.ToString() + "\", \n";
-                    loader += "\"capitalPendiente\":\"" + row.Cells["capitalPendiente"].Value.ToString() + "\", \n";
-                    loader += "\"interesesOrdinariosPendiente\":\"" + row.Cells["interesesOrdinariosPendiente"].Value.ToString() + "\", \n";
-                    loader += "\"interesesMoratoriosPendiente\":\"" + row.Cells["interesesMoratoriosPendiente"].Value.ToString() + "\", \n";
-                    loader += "\"iva\":\"" + row.Cells["iva"].Value.ToString() + "\", \n";
-                    loader += "\"totalPendiente\":\"" + row.Cells["totalPendiente"].Value.ToString() + "\", \n";
-                    loader += "\"numeroPagosPendientes\":\"" + row.Cells["numeroPagosPendientes"].Value.ToString() + "\", \n";
-                    loader += "\"numeroPagosRealizados\":\"" + row.Cells["numeroPagosRealizados"].Value.ToString() + "\", \n";
-                    loader += "\"montoPagoFrecuente\":\"" + row.Cells["montoPagoFrecuente"].Value.ToString() + "\", \n";
-                    loader += "\"fechaUltimoPago\":\"" + row.Cells["fechaUltimoPago"].Value.ToString() + "\", \n";
-                    loader += "\"diasMoratorios\":\"" + row.Cells["diasMoratorios"].Value.ToString() + "\", \n";
-                    loader += "\"importeUltimoPago\":\"" + row.Cells["importeUltimoPago"].Value.ToString() + "\", \n";
-                    loader += "\"saldoExigible\":\"" + row.Cells["saldoExigible"].Value.ToString() + "\", \n";
-                    loader += "\"aPaterno\":\"" + row.Cells["apellidoPaterno"].Value.ToString() + "\", \n";
-                    loader += "\"aMaterno\":\"" + row.Cells["apellidoMaterno"].Value.ToString() + "\", \n";
-                    loader += "\"idSucursal\":\"" + row.Cells["idSucursal"].Value.ToString() + "\", \n";
-                    loader += "\"fechaNacimiento\":\"" + row.Cells["fechaNacimiento"].Value.ToString() + "\", \n";
-                    loader += "\"customerName\":\"" + row.Cells["nombre"].Value.ToString() + "\", \n";
-                    loader += "\"customerPhone\":\"" + row.Cells["telefonoCelular"].Value.ToString() + "\", \n";
-                    loader += "\"customerNumber\":\"" + row.Cells["telefonoFijo"].Value.ToString() + "\", \n";
-                    loader += "\"Prioridad\":\"" + row.Cells["Prioridad"].Value.ToString() + "\", \n";
-                    if (string.IsNullOrEmpty(row.Cells["date"].Value.ToString()))
-                    {
-                        loader += "\"streetAddress\":\"" + row.Cells["Domicilio"].Value.ToString() + "\" \n";
-                    }
-                    else
-                    {
-                        loader += "\"streetAddress\":\"" + row.Cells["Domicilio"].Value.ToString() + "\", \n";
-                        loader += "\"date\":\"" + row.Cells["date"].Value.ToString() + "\" \n";
-                    }
-                    if (i == Max)
-                    {
-                        loader += "} \n ";
-                        body += loader;
-                        PBar.PerformStep();
-                        break;
-                    }
-                    else
-                    {
-                        loader += "},\n ";
-                        body += loader;
-                        PBar.PerformStep();
-                    }
-                }
-                body += "] \n";
-                body += "} \n";
-
-                txtBody.Text += "Realizando petición a WebServices... \r\n";
-                txtBody.Update();
-                var client = new RestClient("https://fincomunfieldserv1.test.etadirect.com/");
-                client.Authenticator = new HttpBasicAuthenticator("mid@fincomunfieldserv1.test", "3a2aeb2ced436bcdddd8791bba5b279801076e04c51cf7243807d6563607e936");
-                var request = new RestRequest("rest/ofscCore/v1/activities/custom-actions/bulkUpdate", Method.POST)
-                {
-                    RequestFormat = DataFormat.Json,
-                };
-                request.AddParameter("application/json", body, ParameterType.RequestBody);
-                request.Timeout = 12000000;
-                IRestResponse response = client.Execute(request);
-
-                var content = response.Content;
-                if (response.StatusCode == HttpStatusCode.OK)
-                {
-                    txtBody.Text += "Petición correcta... \r\n";
+                    txtBody.Text += "Iteración " + iterations + " \r\n";
                     txtBody.Update();
-                    created = true;
+                    iterations++;
+                    bool created = false;
+                    int Max = dubedos;
+                    PBar.Maximum = Max;
+                    PBar.Value = 1;
+                    PBar.Step = 1;
+                    txtBody.Text += "Generando codigo JSON... \r\n";
+                    txtBody.Update();
+                    string body = "{ \n";
+                    body += "\"updateParameters\" : { \n ";
+                    body += "\"identifyActivityBy\" : \"apptNumber\" , \n";
+                    body += "\"ifInFinalStatusThen\" : \"doNothing\" \n ";
+                    body += "}, \n ";
+                    body += "\"activities\" : [ \n ";
+                    int i = 0;
+                    foreach (DataGridViewRow row in dataGrid.Rows)
+                    {
+
+                        //TipoActividad,id,idK,idSucursal,Prioridad,apellidoPaterno,apellidoMaterno,nombre,fechaNacimiento,sexo,Domicilio,lat,lng,telefonoFijo,telefonoCelular,capitalInicial,,interesesOrdinariosPendiente,interesesMoratoriosPendiente,iva,totalPendiente,numeroPagosPendientes,numeroPagosRealizados,montoPagoFrecuente,fechaUltimoPago,diasMoratorios,importeUltimoPago,fechaCreditoOtorgamiento,saldoExigible,date
+                        //loader += "\"capitalAbonado\":\"" + row["capitalInicial"].ToString() + "\", \n";
+                        //loader += "\"interesesOrdinariosAbonado\":\"" + row["capitalInicial"].ToString() + "\", \n";
+                        //loader += "\"interesesMoratoriosAbonado\":\"" + row["capitalInicial"].ToString() + "\", \n";
+                        //loader += "\"totalAbonado\":\"" + row["capitalInicial"].ToString() + "\", \n";
+                        //body += "\"deliveryWindowStart\":\"" + row["capitalInicial"].ToString() + "\", \n";
+                        //body += "\"deliveryWindowEnd\":\"" + row["capitalInicial"].ToString() + "\", \n";
+                        //body += "\"startTime\":\"" + row["capitalInicial"].ToString() + "\", \n";
+                        //body += "\"endTime\":\"" + row["capitalInicial"].ToString() + "\", \n";
+                        //body += "\"city\":\"" + row["capitalInicial"].ToString() + "\", \n";
+                        //body += "\"estado\":\"" + row["capitalInicial"].ToString() + "\", \n";
+                        //body += "\"postalCode\":\"" + row["capitalInicial"].ToString() + "\" \n";
+                        //body += "\"numeroInt\":\"" + row["capitalInicial"].ToString() + "\", \n";
+
+                        i++;
+
+                        string loader = "";
+                        loader += "{ \n";
+                        loader += "\"deliveryWindowStart\": \"16:45:00\", \n";
+                        loader += "\"deliveryWindowEnd\": \"17:45:00\", \n";
+                        loader += "\"startTime\": \"\", \n";
+                        loader += "\"endTime\": \"\", \n";
+                        loader += "\"city\": \".\", \n";
+                        loader += "\"postalCode\": \".\", \n";
+                        loader += "\"timeSlot\": \"Todo el d\u00eda\", \n";
+                        loader += "\"resourceId\":\"" + row.Cells["idK"].Value.ToString() + "\", \n";
+                        loader += "\"activityType\":\"" + row.Cells["tipoActividad"].Value.ToString() + "\", \n";
+                        loader += "\"apptNumber\":\"" + row.Cells["id"].Value.ToString() + DateTime.Now.ToString("mmss") + "\", \n";
+                        loader += "\"capitalInicial\":\"" + row.Cells["capitalInicial"].Value.ToString() + "\", \n";
+                        loader += "\"capitalPendiente\":\"" + row.Cells["capitalPendiente"].Value.ToString() + "\", \n";
+                        loader += "\"interesesOrdinariosPendiente\":\"" + row.Cells["interesesOrdinariosPendiente"].Value.ToString() + "\", \n";
+                        loader += "\"interesesMoratoriosPendiente\":\"" + row.Cells["interesesMoratoriosPendiente"].Value.ToString() + "\", \n";
+                        loader += "\"iva\":\"" + row.Cells["iva"].Value.ToString() + "\", \n";
+                        loader += "\"totalPendiente\":\"" + row.Cells["totalPendiente"].Value.ToString() + "\", \n";
+                        loader += "\"numeroPagosPendientes\":\"" + row.Cells["numeroPagosPendientes"].Value.ToString() + "\", \n";
+                        loader += "\"numeroPagosRealizados\":\"" + row.Cells["numeroPagosRealizados"].Value.ToString() + "\", \n";
+                        loader += "\"montoPagoFrecuente\":\"" + row.Cells["montoPagoFrecuente"].Value.ToString() + "\", \n";
+                        loader += "\"fechaUltimoPago\":\"" + row.Cells["fechaUltimoPago"].Value.ToString() + "\", \n";
+                        loader += "\"diasMoratorios\":\"" + row.Cells["diasMoratorios"].Value.ToString() + "\", \n";
+                        loader += "\"importeUltimoPago\":\"" + row.Cells["importeUltimoPago"].Value.ToString() + "\", \n";
+                        loader += "\"saldoExigible\":\"" + row.Cells["saldoExigible"].Value.ToString() + "\", \n";
+                        loader += "\"aPaterno\":\"" + row.Cells["apellidoPaterno"].Value.ToString() + "\", \n";
+                        loader += "\"aMaterno\":\"" + row.Cells["apellidoMaterno"].Value.ToString() + "\", \n";
+                        loader += "\"idSucursal\":\"" + row.Cells["idSucursal"].Value.ToString() + "\", \n";
+                        loader += "\"fechaNacimiento\":\"" + row.Cells["fechaNacimiento"].Value.ToString() + "\", \n";
+                        loader += "\"customerName\":\"" + row.Cells["nombre"].Value.ToString() + "\", \n";
+                        loader += "\"customerPhone\":\"" + row.Cells["telefonoCelular"].Value.ToString() + "\", \n";
+                        loader += "\"customerNumber\":\"" + row.Cells["telefonoFijo"].Value.ToString() + "\", \n";
+                        loader += "\"Prioridad\":\"" + row.Cells["Prioridad"].Value.ToString() + "\", \n";
+                        if (string.IsNullOrEmpty(row.Cells["date"].Value.ToString()))
+                        {
+                            loader += "\"streetAddress\":\"" + row.Cells["Domicilio"].Value.ToString() + "\" \n";
+                        }
+                        else
+                        {
+                            loader += "\"streetAddress\":\"" + row.Cells["Domicilio"].Value.ToString() + "\", \n";
+                            loader += "\"date\":\"" + row.Cells["date"].Value.ToString() + "\" \n";
+                        }
+                        if (i == Max)
+                        {
+                            loader += "} \n ";
+                            body += loader;
+                            PBar.PerformStep();
+                            break;
+                        }
+                        else
+                        {
+                            loader += "},\n ";
+                            body += loader;
+                            PBar.PerformStep();
+                        }
+                    }
+                    body += "] \n";
+                    body += "} \n";
+
+                    txtBody.Text += "Realizando petición a WebServices... \r\n";
+                    txtBody.Update();
+                    var client = new RestClient("https://fincomunfieldserv1.test.etadirect.com/");
+                    client.Authenticator = new HttpBasicAuthenticator("mid@fincomunfieldserv1.test", "3a2aeb2ced436bcdddd8791bba5b279801076e04c51cf7243807d6563607e936");
+                    var request = new RestRequest("rest/ofscCore/v1/activities/custom-actions/bulkUpdate", Method.POST)
+                    {
+                        RequestFormat = DataFormat.Json,
+                    };
+                    request.AddParameter("application/json", body, ParameterType.RequestBody);
+                    request.Timeout = 12000000;
+                    IRestResponse response = client.Execute(request);
+
+                    var content = response.Content;
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        txtBody.Text += "Petición correcta... \r\n";
+                        txtBody.Update();
+                        created = true;
+                    }
+                    else
+                    {
+
+                        txtBody.Text += "Petición no correcta...  \r\n";
+                        txtBody.Update();
+                        //MessageBox.Show("Error:");
+                        return;
+
+                    }
+
+                    if (created)
+                    {
+                        i = 0;
+                        List<DataRow> rowsWantToDelete = new List<DataRow>();
+                        foreach (DataRow row in dataTable.Rows)
+                        {
+                            i++;
+                            rowsWantToDelete.Add(row);
+                            if (i == Max)
+                            {
+                                break;
+                            }
+                        }
+
+                        foreach (DataRow dr in rowsWantToDelete)
+                        {
+                            dataTable.Rows.Remove(dr);
+                        }
+                        dataTable.AcceptChanges();
+
+                        dataGrid.DataSource = null;
+                        dataGrid.DataSource = dataTable;
+                        dataGrid.Refresh();
+                        dataGrid.Update();
+                        if (dataGrid.Rows.Count >= dubedos)
+                        {
+                            InsertActivities(dubedos);
+                        }
+                        else
+                        {
+                            InsertActivities(dataGrid.Rows.Count);
+                        }
+                    }
                 }
                 else
                 {
-
-                    txtBody.Text += "Petición no correcta...  \r\n";
-                    txtBody.Update();
-                    //MessageBox.Show("Error:");
                     return;
-
-                }
-
-                if (created)
-                {
-                    i = 0;
-                    List<DataRow> rowsWantToDelete = new List<DataRow>();
-                    foreach (DataRow row in dataTable.Rows)
-                    {
-                        i++;
-                        rowsWantToDelete.Add(row);
-                        if (i == Max)
-                        {
-                            break;
-                        }
-                    }
-
-                    foreach (DataRow dr in rowsWantToDelete)
-                    {
-                        dataTable.Rows.Remove(dr);
-                    }
-                    dataTable.AcceptChanges();
-
-                    dataGrid.DataSource = null;
-                    dataGrid.DataSource = dataTable;
-                    dataGrid.Refresh();
-                    dataGrid.Update();
-                    if (dataGrid.Rows.Count >= dubedos)
-                    {
-                        InsertActivities(dubedos);
-                    }
-                    else
-                    {
-                        InsertActivities(dataGrid.Rows.Count);
-                    }
                 }
             }
-            else
+            catch (Exception ex)
             {
-                return;
+                txtBody.ReadOnly = false;
+                txtBody.Clear();
+                txtBody.Text = "Surgió un error: \r\n";
+                txtBody.Text += "Mensaje de error: " + ex.Message + " \r\n";
+                txtBody.Text += "Detalle: " + ex.StackTrace + " \r\n";
             }
         }
+
     }
 }
 

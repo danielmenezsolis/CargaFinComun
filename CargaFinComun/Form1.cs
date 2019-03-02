@@ -243,6 +243,7 @@ namespace CargaFinComun
                     {
 
                         txtBody.Text += "Petición no correcta...  \r\n";
+                        txtBody.Text += "Detalle: " + response.Content;
                         txtBody.Update();
                         //MessageBox.Show("Error:");
                         return;

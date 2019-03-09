@@ -44,6 +44,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.BtnTest = new System.Windows.Forms.RadioButton();
+            this.BtnProd = new System.Windows.Forms.RadioButton();
+            this.label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -52,7 +55,7 @@
             // 
             this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.button1.Image = global::CargaFinComun.Properties.Resources.open_archive;
-            this.button1.Location = new System.Drawing.Point(6, 141);
+            this.button1.Location = new System.Drawing.Point(6, 156);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(48, 31);
             this.button1.TabIndex = 0;
@@ -62,7 +65,7 @@
             // lblFile
             // 
             this.lblFile.AutoSize = true;
-            this.lblFile.Location = new System.Drawing.Point(80, 85);
+            this.lblFile.Location = new System.Drawing.Point(78, 106);
             this.lblFile.Name = "lblFile";
             this.lblFile.Size = new System.Drawing.Size(37, 13);
             this.lblFile.TabIndex = 1;
@@ -72,7 +75,7 @@
             // 
             this.button2.Enabled = false;
             this.button2.Image = global::CargaFinComun.Properties.Resources.upload;
-            this.button2.Location = new System.Drawing.Point(376, 141);
+            this.button2.Location = new System.Drawing.Point(376, 156);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(48, 31);
             this.button2.TabIndex = 2;
@@ -89,7 +92,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 113);
+            this.label2.Location = new System.Drawing.Point(1, 134);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(54, 13);
             this.label2.TabIndex = 4;
@@ -98,7 +101,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(5, 85);
+            this.label3.Location = new System.Drawing.Point(3, 106);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(51, 13);
             this.label3.TabIndex = 5;
@@ -107,7 +110,7 @@
             // lblRecords
             // 
             this.lblRecords.AutoSize = true;
-            this.lblRecords.Location = new System.Drawing.Point(80, 113);
+            this.lblRecords.Location = new System.Drawing.Point(78, 134);
             this.lblRecords.Name = "lblRecords";
             this.lblRecords.Size = new System.Drawing.Size(64, 13);
             this.lblRecords.TabIndex = 6;
@@ -182,7 +185,7 @@
             // label4
             // 
             this.label4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label4.Location = new System.Drawing.Point(-2, 184);
+            this.label4.Location = new System.Drawing.Point(-2, 191);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(440, 2);
             this.label4.TabIndex = 12;
@@ -192,15 +195,51 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(3, 9);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(44, 13);
+            this.label5.Size = new System.Drawing.Size(53, 13);
             this.label5.TabIndex = 13;
-            this.label5.Text = "Ver. 1.1";
+            this.label5.Text = "Ver. 1.2.1";
+            // 
+            // BtnTest
+            // 
+            this.BtnTest.AutoSize = true;
+            this.BtnTest.Checked = true;
+            this.BtnTest.Location = new System.Drawing.Point(81, 77);
+            this.BtnTest.Name = "BtnTest";
+            this.BtnTest.Size = new System.Drawing.Size(46, 17);
+            this.BtnTest.TabIndex = 15;
+            this.BtnTest.TabStop = true;
+            this.BtnTest.Text = "Test";
+            this.BtnTest.UseVisualStyleBackColor = true;
+            this.BtnTest.CheckedChanged += new System.EventHandler(this.BtnTest_CheckedChanged);
+            // 
+            // BtnProd
+            // 
+            this.BtnProd.AutoSize = true;
+            this.BtnProd.Location = new System.Drawing.Point(154, 77);
+            this.BtnProd.Name = "BtnProd";
+            this.BtnProd.Size = new System.Drawing.Size(79, 17);
+            this.BtnProd.TabIndex = 16;
+            this.BtnProd.Text = "Producción";
+            this.BtnProd.UseVisualStyleBackColor = true;
+            this.BtnProd.CheckedChanged += new System.EventHandler(this.BtnProd_CheckedChanged);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(3, 79);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(54, 13);
+            this.label6.TabIndex = 17;
+            this.label6.Text = "Ambiente:";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(436, 359);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.BtnProd);
+            this.Controls.Add(this.BtnTest);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label1);
@@ -239,6 +278,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.RadioButton BtnTest;
+        private System.Windows.Forms.RadioButton BtnProd;
+        private System.Windows.Forms.Label label6;
     }
 }
 

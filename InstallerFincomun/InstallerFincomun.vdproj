@@ -64,12 +64,6 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_BEA98BE319AAB1F315E628B7820CC2CE"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_D05ACA5BCD8F419789B8D2F47662D1D4"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -97,6 +91,12 @@
         "OwnerKey" = "8:_B6ACE8862DB027B6318815DE97AA7435"
         "MsmSig" = "8:_UNDEFINED"
         }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_BEA98BE319AAB1F315E628B7820CC2CE"
+        "MsmSig" = "8:_UNDEFINED"
+        }
     }
     "Configurations"
     {
@@ -115,6 +115,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
         "Release"
         {
@@ -131,6 +139,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.6.1"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.6.1 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.6.1"
+                    }
+                }
+            }
         }
     }
     "Deployable"
@@ -392,7 +416,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:InstallerFincomun"
         "ProductCode" = "8:{EAD7DE3F-37E8-4024-86BF-4FA62ADBADFB}"
-        "PackageCode" = "8:{D423121C-53AA-4664-86EE-EB34D92A2FCF}"
+        "PackageCode" = "8:{A79C3D3B-D99A-44BD-9F9B-F0617BB160A6}"
         "UpgradeCode" = "8:{DC0EB400-1E03-4731-BF74-22C2BC48CFFF}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -400,12 +424,12 @@
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
         "ProductVersion" = "8:1.0.0"
-        "Manufacturer" = "8:César"
+        "Manufacturer" = "8:Sinergy Solutions"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
         "Title" = "8:InstallerFincomun"
         "Subject" = "8:"
-        "ARPCONTACT" = "8:César"
+        "ARPCONTACT" = "8:Sinergy Solutions"
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
         "ARPURLINFOABOUT" = "8:"

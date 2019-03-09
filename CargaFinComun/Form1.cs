@@ -102,20 +102,31 @@ namespace CargaFinComun
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (dataGrid.Rows.Count != 0)
+
+            string ambi = BtnTest.Checked == true ? "Test" : "Productivo";
+
+            DialogResult dr = MessageBox.Show("¿Desea cargar la información en el ambiente " + ambi + "?",
+                      "Confirmar", MessageBoxButtons.YesNo);
+            switch (dr)
             {
-                int dubedos = dataGrid.Rows.Count >= 5000 ? Convert.ToInt32(dataGrid.Rows.Count / 4) : dataGrid.Rows.Count;
-                Stopwatch stopwatch = new Stopwatch();
-                stopwatch.Start();
-                iterations = 0;
-                txtBody.Text += "Iniciando... \r\n";
-                txtBody.Update();
-                InsertActivities(dubedos);
-                stopwatch.Stop();
-                txtBody.Text += "Proceso finalizado... \r\n";
-                txtBody.Update();
-                txtBody.Text += "Tiempo de proceso: " + Math.Round(stopwatch.Elapsed.TotalMinutes, 2) + " minutos, Total iteraciones: " + iterations + "\r\n";
-                txtBody.Update();
+                case DialogResult.Yes:
+
+                    if (dataGrid.Rows.Count != 0)
+                    {
+                        int dubedos = dataGrid.Rows.Count >= 5000 ? Convert.ToInt32(dataGrid.Rows.Count / 4) : dataGrid.Rows.Count;
+                        Stopwatch stopwatch = new Stopwatch();
+                        stopwatch.Start();
+                        iterations = 0;
+                        txtBody.Text += "Iniciando... \r\n";
+                        txtBody.Update();
+                        InsertActivities(dubedos);
+                        stopwatch.Stop();
+                        txtBody.Text += "Proceso finalizado... \r\n";
+                        txtBody.Update();
+                        txtBody.Text += "Tiempo de proceso: " + Math.Round(stopwatch.Elapsed.TotalMinutes, 2) + " minutos, Total iteraciones: " + iterations + "\r\n";
+                        txtBody.Update();
+                    }
+                    break;
             }
         }
 
@@ -191,8 +202,8 @@ namespace CargaFinComun
                         loader += "\"idSucursal\":\"" + row.Cells["idSucursal"].Value.ToString() + "\", \n";
                         loader += "\"fechaNacimiento\":\"" + row.Cells["fechaNacimiento"].Value.ToString() + "\", \n";
                         loader += "\"customerName\":\"" + row.Cells["nombre"].Value.ToString() + "\", \n";
-                        loader += "\"customerPhone\":\"" + row.Cells["telefonoCelular"].Value.ToString() + "\", \n";
-                        loader += "\"customerNumber\":\"" + row.Cells["telefonoFijo"].Value.ToString() + "\", \n";
+                        loader += "\"customerPhone\":\"" + row.Cells["telefonoFijo"].Value.ToString() + "\", \n";
+                        loader += "\"customerCell\":\"" + row.Cells["telefonoFijo"].Value.ToString() + "\", \n";
                         loader += "\"Prioridad\":\"" + row.Cells["Prioridad"].Value.ToString() + "\", \n";
                         if (string.IsNullOrEmpty(row.Cells["date"].Value.ToString()))
                         {
@@ -222,8 +233,13 @@ namespace CargaFinComun
 
                     txtBody.Text += "Realizando petición a WebServices... \r\n";
                     txtBody.Update();
-                    var client = new RestClient("https://fincomunfieldserv1.test.etadirect.com/");
-                    client.Authenticator = new HttpBasicAuthenticator("mid@fincomunfieldserv1.test", "3a2aeb2ced436bcdddd8791bba5b279801076e04c51cf7243807d6563607e936");
+
+                    string urlcliente = BtnTest.Checked == true ? "https://fincomunfieldserv1.test.etadirect.com/" : "https://fincomunfieldserv.etadirect.com/";
+                    string user = BtnTest.Checked == true ? "mid@fincomunfieldserv1.test" : "mid@fincomunfieldserv";
+                    string pass = BtnTest.Checked == true ? "3a2aeb2ced436bcdddd8791bba5b279801076e04c51cf7243807d6563607e936" : "ce52a9a3eff4f55070760291f173a27e3fe80c91dc871ccadf13505c20d7f333";
+
+                    var client = new RestClient(urlcliente);
+                    client.Authenticator = new HttpBasicAuthenticator(user, pass);
                     var request = new RestRequest("rest/ofscCore/v1/activities/custom-actions/bulkUpdate", Method.POST)
                     {
                         RequestFormat = DataFormat.Json,
@@ -233,7 +249,7 @@ namespace CargaFinComun
                     IRestResponse response = client.Execute(request);
 
                     var content = response.Content;
-                    if (response.StatusCode == HttpStatusCode.OK)
+                    if (!content.Contains("operationsFailed"))
                     {
                         txtBody.Text += "Petición correcta... \r\n";
                         txtBody.Update();
@@ -241,7 +257,6 @@ namespace CargaFinComun
                     }
                     else
                     {
-
                         txtBody.Text += "Petición no correcta...  \r\n";
                         txtBody.Text += "Detalle: " + response.Content;
                         txtBody.Update();
@@ -299,6 +314,21 @@ namespace CargaFinComun
             }
         }
 
+        private void BtnTest_CheckedChanged(object sender, EventArgs e)
+        {
+            if (BtnTest.Checked == true)
+            {
+                BtnProd.Checked = false;
+            }
+        }
+
+        private void BtnProd_CheckedChanged(object sender, EventArgs e)
+        {
+            if (BtnProd.Checked == true)
+            {
+                BtnTest.Checked = false;
+            }
+        }
     }
 }
 

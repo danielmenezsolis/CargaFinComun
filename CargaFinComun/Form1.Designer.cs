@@ -197,7 +197,7 @@
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(53, 13);
             this.label5.TabIndex = 13;
-            this.label5.Text = "Ver. 1.2.1";
+            this.label5.Text = "Ver. 1.2.2";
             // 
             // BtnTest
             // 

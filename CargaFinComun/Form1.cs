@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 
 namespace CargaFinComun
 {
@@ -18,6 +19,11 @@ namespace CargaFinComun
 
         public DataTable dataTable { get; set; }
         public int iterations { get; set; }
+        public List<string> Resources { get; set; }
+        private Results.RootObject RootObjResults { get; set; }
+        public int actividadesCorrectas;
+        public int actividadesFallidas;
+
         public Form1()
         {
             InitializeComponent();
@@ -34,7 +40,7 @@ namespace CargaFinComun
                 string filename = theDialog.FileName;
                 string[] filelines = File.ReadAllLines(filename, Encoding.UTF8);
                 lblFile.Text = filename;
-                lblRecords.Text = filelines.Count().ToString();
+                lblRecords.Text = (filelines.Count()-1).ToString();
             }
 
             if (lblFile.Text.Contains("csv"))
@@ -48,7 +54,6 @@ namespace CargaFinComun
 
                 // Read csv into datatable
                 dataTable = new DataTable();
-
                 foreach (string header in headers)
                 {
                     dataTable.Columns.Add(new System.Data.DataColumn(header));
@@ -96,6 +101,7 @@ namespace CargaFinComun
                 if (dataTable != null)
                 {
                     dataGrid.DataSource = dataTable;
+                    Resources = (dataTable.AsEnumerable().Select(x => x["idK"].ToString()).Distinct().ToList());
                 }
             }
         }
@@ -113,18 +119,28 @@ namespace CargaFinComun
 
                     if (dataGrid.Rows.Count != 0)
                     {
+                        actividadesCorrectas = 0;
+                        actividadesFallidas = 0;
                         int dubedos = dataGrid.Rows.Count >= 5000 ? Convert.ToInt32(dataGrid.Rows.Count / 4) : dataGrid.Rows.Count;
                         Stopwatch stopwatch = new Stopwatch();
                         stopwatch.Start();
                         iterations = 0;
                         txtBody.Text += "Iniciando... \r\n";
+                        ActivarRuta();
                         txtBody.Update();
+                        txtBody.SelectionStart = txtBody.Text.Length;
+                        txtBody.ScrollToCaret();
                         InsertActivities(dubedos);
                         stopwatch.Stop();
                         txtBody.Text += "Proceso finalizado... \r\n";
                         txtBody.Update();
+                        txtBody.SelectionStart = txtBody.Text.Length;
+                        txtBody.ScrollToCaret();
                         txtBody.Text += "Tiempo de proceso: " + Math.Round(stopwatch.Elapsed.TotalMinutes, 2) + " minutos, Total iteraciones: " + iterations + "\r\n";
+                        txtBody.Text += "\r\nActividades cargadas correctamente: " + actividadesCorrectas + "\r\nActividades fallidas: " + actividadesFallidas + "\r\n";
                         txtBody.Update();
+                        txtBody.SelectionStart = txtBody.Text.Length;
+                        txtBody.ScrollToCaret();
                     }
                     break;
             }
@@ -136,8 +152,10 @@ namespace CargaFinComun
             {
                 if (dubedos != 0)
                 {
-                    txtBody.Text += "Iteración " + iterations + " \r\n";
+                    txtBody.Text += "\r\nIteración " + iterations + " \r\n";
                     txtBody.Update();
+                    txtBody.SelectionStart = txtBody.Text.Length;
+                    txtBody.ScrollToCaret();
                     iterations++;
                     bool created = false;
                     int Max = dubedos;
@@ -146,6 +164,8 @@ namespace CargaFinComun
                     PBar.Step = 1;
                     txtBody.Text += "Generando codigo JSON... \r\n";
                     txtBody.Update();
+                    txtBody.SelectionStart = txtBody.Text.Length;
+                    txtBody.ScrollToCaret();
                     string body = "{ \n";
                     body += "\"updateParameters\" : { \n ";
                     body += "\"identifyActivityBy\" : \"apptNumber\" , \n";
@@ -183,7 +203,7 @@ namespace CargaFinComun
                         loader += "\"timeSlot\": \"Todo el d\u00eda\", \n";
                         loader += "\"resourceId\":\"" + row.Cells["idK"].Value.ToString() + "\", \n";
                         loader += "\"activityType\":\"" + row.Cells["tipoActividad"].Value.ToString() + "\", \n";
-                        loader += "\"apptNumber\":\"" + row.Cells["id"].Value.ToString() + DateTime.Now.ToString("mmss") + "\", \n";
+                        loader += "\"apptNumber\":\"" + row.Cells["id"].Value.ToString() + "\", \n";
                         loader += "\"capitalInicial\":\"" + row.Cells["capitalInicial"].Value.ToString() + "\", \n";
                         loader += "\"capitalPendiente\":\"" + row.Cells["capitalPendiente"].Value.ToString() + "\", \n";
                         loader += "\"interesesOrdinariosPendiente\":\"" + row.Cells["interesesOrdinariosPendiente"].Value.ToString() + "\", \n";
@@ -202,8 +222,18 @@ namespace CargaFinComun
                         loader += "\"idSucursal\":\"" + row.Cells["idSucursal"].Value.ToString() + "\", \n";
                         loader += "\"fechaNacimiento\":\"" + row.Cells["fechaNacimiento"].Value.ToString() + "\", \n";
                         loader += "\"customerName\":\"" + row.Cells["nombre"].Value.ToString() + "\", \n";
+                        // Cambio Esteban - Latitud / Longitud
+                        if (!string.IsNullOrEmpty(row.Cells["lat"].Value.ToString()))
+                        {
+                            loader += "\"latitude\":" + row.Cells["lat"].Value + ", \n";
+                        }
+                        if (!string.IsNullOrEmpty(row.Cells["lng"].Value.ToString()))
+                        {
+                            loader += "\"longitude\":" + row.Cells["lng"].Value + ", \n";
+                        }
+                        // FIN Cambio
                         loader += "\"customerPhone\":\"" + row.Cells["telefonoFijo"].Value.ToString() + "\", \n";
-                        loader += "\"customerCell\":\"" + row.Cells["telefonoFijo"].Value.ToString() + "\", \n";
+                        loader += "\"customerCell\":\"" + row.Cells["telefonoCelular"].Value.ToString() + "\", \n";
                         loader += "\"Prioridad\":\"" + row.Cells["Prioridad"].Value.ToString() + "\", \n";
                         if (string.IsNullOrEmpty(row.Cells["date"].Value.ToString()))
                         {
@@ -233,6 +263,8 @@ namespace CargaFinComun
 
                     txtBody.Text += "Realizando petición a WebServices... \r\n";
                     txtBody.Update();
+                    txtBody.SelectionStart = txtBody.Text.Length;
+                    txtBody.ScrollToCaret();
 
                     string urlcliente = BtnTest.Checked == true ? "https://fincomunfieldserv1.test.etadirect.com/" : "https://fincomunfieldserv.etadirect.com/";
                     string user = BtnTest.Checked == true ? "mid@fincomunfieldserv1.test" : "mid@fincomunfieldserv";
@@ -247,14 +279,54 @@ namespace CargaFinComun
                     request.AddParameter("application/json", body, ParameterType.RequestBody);
                     request.Timeout = 12000000;
                     IRestResponse response = client.Execute(request);
-
                     var content = response.Content;
+
+                    Results.RootObject resultados = JsonConvert.DeserializeObject<Results.RootObject>(content);
+                    if (resultados != null & resultados.results.Count > 0)
+                    {
+                        RootObjResults = resultados;
+                        foreach(Results.Result resultado in RootObjResults.results)
+                        {
+                            if (resultado.operationsFailed != null)
+                            {
+                                actividadesFallidas += 1;
+                                txtBody.Text += "\r\nError al subir appt: \r\n";
+                                txtBody.Text += "apptNumber: " + resultado.activityKeys.apptNumber.ToString() + "\r\n";
+                                foreach (Results.Error error in resultado.errors)
+                                {
+                                    txtBody.Text += "error: " + error.errorDetail.ToString() + "\r\n";
+                                }
+                                txtBody.Update();
+                                txtBody.SelectionStart = txtBody.Text.Length;
+                                txtBody.ScrollToCaret();
+                            }
+                            else
+                            {
+                                actividadesCorrectas += 1;
+                            }
+                        }
+                    }
+
                     if (!content.Contains("operationsFailed"))
                     {
-                        txtBody.Text += "Petición correcta... \r\n";
+                        txtBody.Text += "\r\nPetición correcta... \r\n";
                         txtBody.Update();
+                        txtBody.SelectionStart = txtBody.Text.Length;
+                        txtBody.ScrollToCaret();
                         created = true;
                     }
+                    else
+                    {
+                        txtBody.Text += "\r\nPetición no correcta...  \r\n";
+                        txtBody.Text += "Detalle: algunas actividades no fueron cargadas.  \r\n";// + response.Content;
+                        txtBody.Update();
+                        txtBody.SelectionStart = txtBody.Text.Length;
+                        txtBody.ScrollToCaret();
+                        created = true;
+                        //MessageBox.Show("Error:");
+                        //return;
+                    }
+                    /*
                     else
                     {
                         txtBody.Text += "Petición no correcta...  \r\n";
@@ -264,7 +336,7 @@ namespace CargaFinComun
                         return;
 
                     }
-
+                    */
                     if (created)
                     {
                         i = 0;
@@ -303,6 +375,48 @@ namespace CargaFinComun
                 {
                     return;
                 }
+            }
+            catch (Exception ex)
+            {
+                txtBody.ReadOnly = false;
+                txtBody.Clear();
+                txtBody.Text = "Surgió un error: \r\n";
+                txtBody.Text += "Mensaje de error: " + ex.Message + " \r\n";
+                txtBody.Text += "Detalle: " + ex.StackTrace + " \r\n";
+            }
+        }
+
+        private void ActivarRuta()
+        {
+            try
+            {
+                PBar.Maximum = Resources.Count;
+                PBar.Value = 0;
+                PBar.Step = 1;
+                txtBody.Text += "Activando ruta para " + Resources.Count.ToString() + " recursos... \r\n";
+                txtBody.Update();
+                txtBody.SelectionStart = txtBody.Text.Length;
+                txtBody.ScrollToCaret();
+                foreach (string resource in Resources)
+                {
+                    string urlcliente = BtnTest.Checked == true ? "https://fincomunfieldserv1.test.etadirect.com/" : "https://fincomunfieldserv.etadirect.com/";
+                    string user = BtnTest.Checked == true ? "mid@fincomunfieldserv1.test" : "mid@fincomunfieldserv";
+                    string pass = BtnTest.Checked == true ? "3a2aeb2ced436bcdddd8791bba5b279801076e04c51cf7243807d6563607e936" : "ce52a9a3eff4f55070760291f173a27e3fe80c91dc871ccadf13505c20d7f333";
+
+                    string dateRoute = DateTime.Now.ToString("yyyy-MM-dd");
+                    var client = new RestClient(urlcliente);
+                    client.Authenticator = new HttpBasicAuthenticator(user, pass);
+                    var request = new RestRequest("rest/ofscCore/v1/resources/" + resource + "/routes/" + dateRoute + "/custom-actions/activate", Method.POST)
+                    {
+                        RequestFormat = DataFormat.Json,
+                    };
+                    IRestResponse response = client.Execute(request);
+                    PBar.PerformStep();
+                }
+                txtBody.Text += "Rutas activas\r\n";
+                txtBody.Update();
+                txtBody.SelectionStart = txtBody.Text.Length;
+                txtBody.ScrollToCaret();
             }
             catch (Exception ex)
             {
